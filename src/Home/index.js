@@ -1,20 +1,23 @@
 import {connect} from 'react-redux';
 import { withRouter } from "react-router-dom";
-import {receivedList} from "./modules/homeReducer";
+import {formSubmit,GetData,EditData} from "./modules/homeReducer";
 import Home from "./components/home";
 
 const mapStateToProps = (state) => {
-	console.log(state)
 	return {
 		fetching:state.home.fetching,
 		receivingList:state.home.receivingList,
-		error:state.home.error
+		error:state.home.error,
+		data:state.home.data,
+		edit:state.home.edit
 	}
 }
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		receivedList:() => dispatch(receivedList())
+		formSubmit:(data) => dispatch(formSubmit(data)),
+		GetData:() => dispatch(GetData()),
+		EditData:(value) => dispatch(EditData(value))
 	}
 }
 

@@ -5,6 +5,8 @@ import {url} from "../../config.json";
 export const FETCHING_DATA = 'FETCHING_DATA';
 export const RECEIVING_DATA = 'RECEIVING_DATA';
 export const ERROR = 'ERROR';
+export const GET_DATA = 'GET_DATA';
+export const EDIT_DATA = "EDIT_DATA";
 
 
 //--------------------ACTION-------------------------------
@@ -18,7 +20,7 @@ export function sendingData(status) {
 export function receivingData(response) {
 	return {
 		type: RECEIVING_DATA,
-		receivingList: response
+		receivingData: response
 	}
 }
 export function errorData(status) {
@@ -27,25 +29,51 @@ export function errorData(status) {
 		error: status
 	}
 }
+export function getData(data) {
+	return {
+		type:GET_DATA,
+		data:data
+	}
+}
+export function editing(value) {
+	return {
+		type:EDIT_DATA,
+		edit:value
+	}
+}
 
 
 //------------------------FUNCTION-------------------------
-export const receivedList = () => {
+export const formSubmit = (data) => {
 	return (dispatch) => {
+
+		let localData = []
 		dispatch(sendingData(true));
-		axios.get(`${url}rest/?method=flickr.cameras.getBrandModels&api_key=8cc39b0435aa0c453ea8d3054c14e152&brand=canon&format=json&nojsoncallback=1&auth_token=72157717161281787-1749c8f9ffceb0af&api_sig=7780b840937af6c28d7a5d66e1f7fe61`)
-		.then(res => {
-			// let data = [];
-			// res.data.cameras.camera.map((item) => {
-				
-			// })
-			// for(let i=0;i<res.data.cameras.camera;i++) {
-			// 	console.log("jjjjjjjjjjjjjjjjjjjjjjjjjjjjjj");
-			// }
-			dispatch(receivingData(res.data.cameras))
-		}).catch(err => {
-			dispatch(errorData(true,err))
-		})
+		if(data) {
+			localData.push(data)
+			localStorage.setItem('value',JSON.stringify(localData));
+			dispatch(receivingData(localData))
+			window.location.reload()
+			localData = JSON.parse(localStorage.getItem('value')); 
+		} else {
+			dispatch(errorData(data))
+		}
+	}
+}
+ 
+export const GetData = () => {
+	return (dispatch) => {
+		let array = [];
+		let value = JSON.parse(localStorage.getItem('value'))
+		array.push(value)
+		dispatch(getData(array))
+	}	
+}
+
+export const EditData = (data) => {
+	console.log(data)
+	return (dispatch) => {
+		dispatch(editing(data))
 	}
 }
 
@@ -70,6 +98,18 @@ const ACTION_HANDLERS = {
 			...state,
 			error:action.error
 		}
+	},
+	[GET_DATA]:(state,action) => {
+		return {
+			...state,
+			data:action.data
+		}
+	},
+	[EDIT_DATA]:(state,action) => {
+		return {
+			...state,
+			edit:action.edit
+		}
 	}
 };
 
@@ -81,8 +121,10 @@ const ACTION_HANDLERS = {
 
 const initialState = {
 	fetching:false,
-	receivingList:[],
-	error:false
+	receivingData:[],
+	error:false,
+	data:[],
+	edit:[]
 }
 
 
