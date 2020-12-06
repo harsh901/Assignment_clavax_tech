@@ -10,6 +10,7 @@ class ApplicationComponent extends React.Component {
     }
 
     handleValidation(value){
+        console.log(value.pin)
         let fields = this.state.fields;
         let errors = {};
         let formIsValid = true;
@@ -129,7 +130,7 @@ class ApplicationComponent extends React.Component {
             formIsValid = false;
             errors["pin"] = "please enter pin"
         }
-        if(typeof fields["pin"] !== undefined) {
+        if(typeof fields["pin"] !== "undefined") {
             if(value.pin.length !== 6) {
                 formIsValid = false;
                 errors["pin"] = "please enter 6 digit pin"
