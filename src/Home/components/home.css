@@ -3,3 +3,6 @@
 	font-family: Arial;
 	text-align: center;
 }
+.myClickableThingy {
+    cursor: pointer;
+}
