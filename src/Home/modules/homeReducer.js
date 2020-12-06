@@ -49,14 +49,21 @@ export const formSubmit = (data) => {
 
 		let localData = []
 		dispatch(sendingData(true));
-		if(data) {
+		if(localStorage.getItem(('value') === null) && data) {
+			localData.push(data)
+			localStorage.setItem('value',JSON.stringify(localData));
+			window.location.reload()
+		}
+		else if (localStorage.getItem('value')!==null && data) {
+			localData = JSON.parse(localStorage.getItem('value')); 
 			localData.push(data)
 			localStorage.setItem('value',JSON.stringify(localData));
 			dispatch(receivingData(localData))
 			window.location.reload()
-			localData = JSON.parse(localStorage.getItem('value')); 
 		} else {
-			dispatch(errorData(data))
+			localData.push(data)
+			localStorage.setItem('value',JSON.stringify(localData));
+			window.location.reload();
 		}
 	}
 }
