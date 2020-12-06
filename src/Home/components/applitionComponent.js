@@ -164,8 +164,9 @@ class ApplicationComponent extends React.Component {
                    <form name="information" className="information">
                         <div className="col-md-6">
                           <fieldset>
-                                <input ref="studentName" type="text" size="30" placeholder="studentName" onChange={this.handleChange.bind(this, "studentName")} value={this.state.fields["studentName"]}/>
+                                <input ref="studentName" type="text" size="30" placeholder="firstName" onChange={this.handleChange.bind(this, "studentName")} value={this.state.fields["studentName"]}/>
                                 <span style={{color: "red"}}>{this.state.errors["studentName"]}</span> <br/>
+                                <input ref="lastName" type="text" size="30" placeholder="lastName" onChange={this.handleChange.bind(this, "lastName")} value={this.state.fields["lastName"]}/><br/>
                                 <input ref="fatherName" type="text" size="30" placeholder="fatherName" onChange={this.handleChange.bind(this, "fatherName")} value={this.state.fields["fatherName"]}/>
                                 <span style={{color: "red"}}>{this.state.errors["fatherName"]}</span><br/>
                                 <input refs="email" type="text" size="30" placeholder="Email" onChange={this.handleChange.bind(this, "email")} value={this.state.fields["email"]}/>
